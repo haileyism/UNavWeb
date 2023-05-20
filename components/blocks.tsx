@@ -6,8 +6,8 @@ export default function Blocks() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
-            <h2 className="h2 mb-4">The majority our customers do not understand their workflows.</h2>
-            <p className="text-xl text-gray-400">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <h2 className="h2 mb-4">About Us</h2>
+            <p className="text-xl text-gray-400">This project presents a novel sensor-infrastructure-independent assistive navigation system for visually impaired individuals. It uses topometric maps, visual place recognition, and other algorithms for localization and navigation, achieving sub-meter accuracy. The system runs on cloud servers and supports offline computation on end-user devices.</p>
           </div>
 
           {/* Items */}
