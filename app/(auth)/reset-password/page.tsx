@@ -1,3 +1,4 @@
+//use client
 export const metadata = {
   title: 'Reset Password - Open PRO',
   description: 'Page description',
