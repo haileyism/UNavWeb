@@ -1,7 +1,35 @@
-import Link from 'next/link'
-import MobileMenu from './mobile-menu'
+'use client'
+import { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
+import MobileMenu from './mobile-menu';
 
 export default function Header() {
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownTimeout = useRef(null);
+
+  const handleDropdownToggle = () => {
+    clearTimeout(dropdownTimeout.current);
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleMouseEnter = () => {
+    clearTimeout(dropdownTimeout.current);
+    setShowDropdown(true);
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(dropdownTimeout.current);
+    dropdownTimeout.current = setTimeout(() => {
+      setShowDropdown(false);
+    }, 200); // Adjust the delay as per your preference
+  };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(dropdownTimeout.current);
+    };
+  }, []);
+
   return (
     <header className="absolute w-full z-30">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -21,16 +49,35 @@ export default function Header() {
             {/* Desktop sign in links */}
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
-                <Link
-                  href="/signin"
-                  className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                <div
+                  className="relative"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
                 >
-                  Sign in
-                </Link>
+                  <button className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">
+                    Sign in
+                  </button>
+                  {showDropdown && (
+                    <ul className="absolute top-full left-0 mt-2 py-2 bg-gray-200 rounded-md shadow-lg">
+                       <li>
+                        <Link href="/signin">
+                          <div className="block px-4 py-2 text-gray-800 hover:bg-purple-700">User Sign In</div>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/signin">
+                          <div className="block px-4 py-2 text-gray-800 hover:bg-purple-700">Employee Sign In</div>
+                        </Link>
+                      </li>
+                    </ul>
+                  )}
+                </div>
               </li>
               <li>
-                <Link href="/signup" className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
-                  Sign up
+                <Link href="/signup" passHref>
+                  <div className="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3">
+                    Sign up
+                  </div>
                 </Link>
               </li>
             </ul>
@@ -41,5 +88,6 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
+
